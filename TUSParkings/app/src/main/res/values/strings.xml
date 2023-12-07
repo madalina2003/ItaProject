@@ -1,0 +1,23 @@
+<resources>
+    <string name="app_name">TUSParking</string>
+
+        <string name="home_screen_image_content">TUS Parking</string>
+        <string name="home_screen_text">TUS Parking</string>
+        <string name="home_screen_textMessage">Welcome Back !</string>
+        <string name="home_screen_loginButton">Continue</string>
+        <string name="home_screen_registerButton">Get Started</string>
+    <string name="search">Search</string>
+
+
+        <string name="sign_in_screen_text">Sign into your Account</string>
+        <string name="sign_in_screen_signIn_button">Continue</string>
+
+        <string name="sign_up_screen_back_button">Back Icon: Navigate back to home</string>
+        <string name="sign_up_screen_email">Email</string>
+        <string name="sign_up_screen_password">Password</string>
+
+
+        <string name="sign_up_screen_register_button">Register</string>
+
+<!--    <string name="map_id">6852d4407064ffc0</string>-->
+    </resources>
