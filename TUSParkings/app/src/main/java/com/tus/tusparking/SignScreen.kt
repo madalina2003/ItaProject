@@ -46,193 +46,22 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tus.tusparking.com.tus.tusparking.SignUpViewModel
 
 
-//@OptIn(ExperimentalMaterial3Api::class)
-//@Composable
-//fun SignScreen(navController: NavController, viewModel: SignUpViewModel = viewModel()) {
-//    Scaffold(
-//        topBar = { SignTopAppBar(navController) }
-//    ) { paddingValues ->
-//        Column(
-//            modifier = Modifier
-//                .padding(paddingValues)
-//                .verticalScroll(rememberScrollState()),
-//            horizontalAlignment = Alignment.CenterHorizontally
-//        ) {
-//            Column() {
-//                Spacer(modifier = Modifier.height(50.dp))
-//                SignTopText()
-//                SignMainContent(navController, viewModel)
-//
-//            }
-//
-//        }
-//    }
-//}
-//
-//@OptIn(ExperimentalMaterial3Api::class)
-//@Composable
-//fun SignTopAppBar(navController: NavController) {
-//    TopAppBar(
-//        title = {
-//            Row(verticalAlignment = Alignment.CenterVertically) {
-//                IconButton(onClick = { navController.popBackStack() }) {
-//
-//                    Icon(
-//                        imageVector = Icons.Filled.KeyboardArrowLeft,
-//                        modifier = Modifier.size(25.dp),
-//                        contentDescription = stringResource(R.string.sign_up_screen_back_button)
-//                    )
-//                }
-//                Spacer(modifier = Modifier.width(16.dp))
-//
-//                Text(
-//                    stringResource(R.string.home_screen_text),
-//                    fontWeight = FontWeight.Bold
-//                )
-//
-//
-//            }
-//        },
-//        actions = {
-//        }
-//    )
-//}
-//
-//@Composable
-//fun SignTopText() {
-//    Row(modifier = Modifier.fillMaxWidth()) {
-//        Text(
-//            text = stringResource(R.string.sign_in_screen_text),
-//            textAlign = TextAlign.Center,
-//            modifier = Modifier.fillMaxWidth(),
-//            fontWeight = FontWeight.Normal,
-//            fontSize = 18.sp,
-//        )
-//    }
-//}
-//
-//@OptIn(ExperimentalMaterial3Api::class)
-//@Composable
-//fun SignMainContent(navController: NavController, viewModel: SignUpViewModel) {
-//    var email by remember { mutableStateOf("") }
-//    var password by remember { mutableStateOf("") }
-//
-//    Column(
-//        modifier = Modifier
-//            .padding(
-//                start = dimensionResource(R.dimen.padding_input_fields_start),
-//                end = dimensionResource(R.dimen.padding_input_fields_end),
-//                top = dimensionResource(R.dimen.padding_input_fields_top),
-//                bottom = dimensionResource(R.dimen.padding_input_fields_bottom)
-//            )
-//    ) {
-//        Spacer(modifier = Modifier.height(15.dp))
-//
-//        OutlinedTextField(
-//            value = email,
-//            singleLine = true,
-//            shape = MaterialTheme.shapes.medium,
-//            modifier = Modifier.fillMaxWidth(),
-//            onValueChange = { email = it },
-//            colors = TextFieldDefaults.outlinedTextFieldColors(
-//                focusedBorderColor = MaterialTheme.colorScheme.surface,
-//                unfocusedBorderColor = MaterialTheme.colorScheme.surface,
-//                disabledBorderColor = MaterialTheme.colorScheme.surface,
-//            ),
-//            label = {
-//                Text(
-//                    stringResource(R.string.sign_up_screen_email),
-//                    fontWeight = FontWeight.Normal,
-//                    fontSize = 18.sp,
-//                )
-//            },
-//            isError = false,
-//            keyboardOptions = KeyboardOptions.Default,
-//            keyboardActions = KeyboardActions.Default,
-//        )
-//        Spacer(modifier = Modifier.height(15.dp))
-//
-//        OutlinedTextField(
-//            value = password,
-//            singleLine = true,
-//            shape = MaterialTheme.shapes.medium,
-//            modifier = Modifier.fillMaxWidth(),
-//            onValueChange = { password = it },
-//            colors = TextFieldDefaults.outlinedTextFieldColors(
-//                focusedBorderColor = MaterialTheme.colorScheme.surface,
-//                unfocusedBorderColor = MaterialTheme.colorScheme.surface,
-//                disabledBorderColor = MaterialTheme.colorScheme.surface,
-//            ),
-//            label = { Text(stringResource(R.string.sign_up_screen_password)) },
-//            isError = false,
-//            keyboardOptions = KeyboardOptions.Default,
-//            keyboardActions = KeyboardActions.Default,
-//            visualTransformation = PasswordVisualTransformation()
-//        )
-//        Spacer(modifier = Modifier.height(15.dp))
-//
-//    }
-//
-//    Column(
-//        modifier = Modifier
-//            .padding(
-//                start = dimensionResource(R.dimen.padding_sign_up_button_start),
-//                end = dimensionResource(R.dimen.padding_sign_up_button_end)
-//            )
-//    ) {
-//        Button(
-//            onClick = {
-//                viewModel.register(email, password)
-//            },
-//            shape = MaterialTheme.shapes.medium,
-//            modifier = Modifier.fillMaxWidth()
-//        ) {
-//            Text(
-//                text = stringResource(R.string.sign_in_screen_signIn_button),
-//                fontWeight = FontWeight.Normal,
-//                fontSize = 18.sp,
-//                textAlign = TextAlign.Center
-//            )
-//        }
-//        Spacer(modifier = Modifier.height(10.dp))
-//    }
-//}
-//
-//@Preview(showBackground = true)
-//@Composable
-//fun SignScreenPreview() {
-//    TUSParkingTheme {
-//        val navController = rememberNavController()
-//        val signUpViewModel = SignUpViewModel()
-//        SignScreen(navController, signUpViewModel)
-//    }
-//}
-//
-//@Preview
-//@Composable
-//fun SignScreenDarkPreview() {
-//    TUSParkingTheme(darkTheme = true) {
-//        val navController = rememberNavController()
-//        val signUpViewModel = SignUpViewModel()
-//        SignScreen(navController, signUpViewModel)
-//    }
-//}
-
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignScreen(navController: NavController){
+fun SignScreen(navController: NavController, viewModel: SignUpViewModel = viewModel()) {
     Scaffold(
-        topBar = {SignTopAppBar(navController)}
-
-    ) {paddingValues ->
-        Column(modifier = Modifier
-            .padding(paddingValues)
-            .verticalScroll(rememberScrollState()),
-            horizontalAlignment = Alignment.CenterHorizontally) {
+        topBar = { SignTopAppBar(navController) }
+    ) { paddingValues ->
+        Column(
+            modifier = Modifier
+                .padding(paddingValues)
+                .verticalScroll(rememberScrollState()),
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
             Column() {
                 Spacer(modifier = Modifier.height(50.dp))
                 SignTopText()
-                SignMainContent(navController)
+                SignMainContent(navController, viewModel)
 
             }
 
@@ -242,61 +71,61 @@ fun SignScreen(navController: NavController){
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignTopAppBar(navController: NavController){
+fun SignTopAppBar(navController: NavController) {
     TopAppBar(
         title = {
-            Row(verticalAlignment = Alignment.CenterVertically )
-            {
+            Row(verticalAlignment = Alignment.CenterVertically) {
                 IconButton(onClick = { navController.popBackStack() }) {
 
-                    Icon(imageVector = Icons.Filled.KeyboardArrowLeft,modifier = Modifier.size(25.dp), contentDescription = stringResource(
-                        R.string.sign_up_screen_back_button)
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowLeft,
+                        modifier = Modifier.size(25.dp),
+                        contentDescription = stringResource(R.string.sign_up_screen_back_button)
                     )
                 }
                 Spacer(modifier = Modifier.width(16.dp))
 
                 Text(
-                    stringResource(R.string.home_screen_text) ,
-                    fontWeight = FontWeight.Bold )
+                    stringResource(R.string.home_screen_text),
+                    fontWeight = FontWeight.Bold
+                )
 
 
             }
         },
         actions = {
         }
-
-
     )
-
-
-
 }
 
 @Composable
-fun SignTopText(){
+fun SignTopText() {
     Row(modifier = Modifier.fillMaxWidth()) {
-        Text(text = stringResource(R.string.sign_in_screen_text),
+        Text(
+            text = stringResource(R.string.sign_in_screen_text),
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth(),
-
-            fontWeight=FontWeight.Normal,
-            fontSize = 18.sp,)
+            fontWeight = FontWeight.Normal,
+            fontSize = 18.sp,
+        )
     }
-
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun SignMainContent(navController:NavController){
+fun SignMainContent(navController: NavController, viewModel: SignUpViewModel) {
     var email by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
-    Column(modifier = Modifier
-        .padding(
-            start= dimensionResource(R.dimen.padding_input_fields_start),
-            end = dimensionResource(R.dimen.padding_input_fields_end),
-            top = dimensionResource(R.dimen.padding_input_fields_top),
-            bottom = dimensionResource(R.dimen.padding_input_fields_bottom)
-        )){
+
+    Column(
+        modifier = Modifier
+            .padding(
+                start = dimensionResource(R.dimen.padding_input_fields_start),
+                end = dimensionResource(R.dimen.padding_input_fields_end),
+                top = dimensionResource(R.dimen.padding_input_fields_top),
+                bottom = dimensionResource(R.dimen.padding_input_fields_bottom)
+            )
+    ) {
         Spacer(modifier = Modifier.height(15.dp))
 
         OutlinedTextField(
@@ -304,16 +133,19 @@ fun SignMainContent(navController:NavController){
             singleLine = true,
             shape = MaterialTheme.shapes.medium,
             modifier = Modifier.fillMaxWidth(),
-            onValueChange = {email=it},
+            onValueChange = { email = it },
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = MaterialTheme.colorScheme.surface,
                 unfocusedBorderColor = MaterialTheme.colorScheme.surface,
                 disabledBorderColor = MaterialTheme.colorScheme.surface,
             ),
-            label = { Text(
-                stringResource(R.string.sign_up_screen_email),
-                fontWeight=FontWeight.Normal,
-                fontSize = 18.sp,) },
+            label = {
+                Text(
+                    stringResource(R.string.sign_up_screen_email),
+                    fontWeight = FontWeight.Normal,
+                    fontSize = 18.sp,
+                )
+            },
             isError = false,
             keyboardOptions = KeyboardOptions.Default,
             keyboardActions = KeyboardActions.Default,
@@ -325,7 +157,7 @@ fun SignMainContent(navController:NavController){
             singleLine = true,
             shape = MaterialTheme.shapes.medium,
             modifier = Modifier.fillMaxWidth(),
-            onValueChange = {password = it },
+            onValueChange = { password = it },
             colors = TextFieldDefaults.outlinedTextFieldColors(
                 focusedBorderColor = MaterialTheme.colorScheme.surface,
                 unfocusedBorderColor = MaterialTheme.colorScheme.surface,
@@ -340,15 +172,17 @@ fun SignMainContent(navController:NavController){
         Spacer(modifier = Modifier.height(15.dp))
 
     }
-    //Button
-    Column(modifier = Modifier
-        .padding(
-            start = dimensionResource(R.dimen.padding_sign_up_button_start),
-            end = dimensionResource(R.dimen.padding_sign_up_button_end)
-        )){
+
+    Column(
+        modifier = Modifier
+            .padding(
+                start = dimensionResource(R.dimen.padding_sign_up_button_start),
+                end = dimensionResource(R.dimen.padding_sign_up_button_end)
+            )
+    ) {
         Button(
             onClick = {
-                navController.navigate("HomeScreen")
+                viewModel.register(email, password)
             },
             shape = MaterialTheme.shapes.medium,
             modifier = Modifier.fillMaxWidth()
@@ -361,9 +195,7 @@ fun SignMainContent(navController:NavController){
             )
         }
         Spacer(modifier = Modifier.height(10.dp))
-
     }
-
 }
 
 @Preview(showBackground = true)
@@ -371,9 +203,8 @@ fun SignMainContent(navController:NavController){
 fun SignScreenPreview() {
     TUSParkingTheme {
         val navController = rememberNavController()
-        SignMainContent(navController)
-        SignScreen(navController)
-
+        val signUpViewModel = SignUpViewModel()
+        SignScreen(navController, signUpViewModel)
     }
 }
 
@@ -382,7 +213,176 @@ fun SignScreenPreview() {
 fun SignScreenDarkPreview() {
     TUSParkingTheme(darkTheme = true) {
         val navController = rememberNavController()
-        SignScreen(navController)
-
+        val signUpViewModel = SignUpViewModel()
+        SignScreen(navController, signUpViewModel)
     }
 }
+//
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Composable
+//fun SignScreen(navController: NavController){
+//    Scaffold(
+//        topBar = {SignTopAppBar(navController)}
+//
+//    ) {paddingValues ->
+//        Column(modifier = Modifier
+//            .padding(paddingValues)
+//            .verticalScroll(rememberScrollState()),
+//            horizontalAlignment = Alignment.CenterHorizontally) {
+//            Column() {
+//                Spacer(modifier = Modifier.height(50.dp))
+//                SignTopText()
+//                SignMainContent(navController)
+//
+//            }
+//
+//        }
+//    }
+//}
+
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Composable
+//fun SignTopAppBar(navController: NavController){
+//    TopAppBar(
+//        title = {
+//            Row(verticalAlignment = Alignment.CenterVertically )
+//            {
+//                IconButton(onClick = { navController.popBackStack() }) {
+//
+//                    Icon(imageVector = Icons.Filled.KeyboardArrowLeft,modifier = Modifier.size(25.dp), contentDescription = stringResource(
+//                        R.string.sign_up_screen_back_button)
+//                    )
+//                }
+//                Spacer(modifier = Modifier.width(16.dp))
+//
+//                Text(
+//                    stringResource(R.string.home_screen_text) ,
+//                    fontWeight = FontWeight.Bold )
+//
+//
+//            }
+//        },
+//        actions = {
+//        }
+//
+//
+//    )
+//
+//
+//
+//}
+
+//@Composable
+//fun SignTopText(){
+//    Row(modifier = Modifier.fillMaxWidth()) {
+//        Text(text = stringResource(R.string.sign_in_screen_text),
+//            textAlign = TextAlign.Center,
+//            modifier = Modifier.fillMaxWidth(),
+//
+//            fontWeight=FontWeight.Normal,
+//            fontSize = 18.sp,)
+//    }
+//
+//}
+
+//@OptIn(ExperimentalMaterial3Api::class)
+//@Composable
+//fun SignMainContent(navController:NavController){
+//    var email by remember { mutableStateOf("") }
+//    var password by remember { mutableStateOf("") }
+//    Column(modifier = Modifier
+//        .padding(
+//            start= dimensionResource(R.dimen.padding_input_fields_start),
+//            end = dimensionResource(R.dimen.padding_input_fields_end),
+//            top = dimensionResource(R.dimen.padding_input_fields_top),
+//            bottom = dimensionResource(R.dimen.padding_input_fields_bottom)
+//        )){
+//        Spacer(modifier = Modifier.height(15.dp))
+//
+//        OutlinedTextField(
+//            value = email,
+//            singleLine = true,
+//            shape = MaterialTheme.shapes.medium,
+//            modifier = Modifier.fillMaxWidth(),
+//            onValueChange = {email=it},
+//            colors = TextFieldDefaults.outlinedTextFieldColors(
+//                focusedBorderColor = MaterialTheme.colorScheme.surface,
+//                unfocusedBorderColor = MaterialTheme.colorScheme.surface,
+//                disabledBorderColor = MaterialTheme.colorScheme.surface,
+//            ),
+//            label = { Text(
+//                stringResource(R.string.sign_up_screen_email),
+//                fontWeight=FontWeight.Normal,
+//                fontSize = 18.sp,) },
+//            isError = false,
+//            keyboardOptions = KeyboardOptions.Default,
+//            keyboardActions = KeyboardActions.Default,
+//        )
+//        Spacer(modifier = Modifier.height(15.dp))
+//
+//        OutlinedTextField(
+//            value = password,
+//            singleLine = true,
+//            shape = MaterialTheme.shapes.medium,
+//            modifier = Modifier.fillMaxWidth(),
+//            onValueChange = {password = it },
+//            colors = TextFieldDefaults.outlinedTextFieldColors(
+//                focusedBorderColor = MaterialTheme.colorScheme.surface,
+//                unfocusedBorderColor = MaterialTheme.colorScheme.surface,
+//                disabledBorderColor = MaterialTheme.colorScheme.surface,
+//            ),
+//            label = { Text(stringResource(R.string.sign_up_screen_password)) },
+//            isError = false,
+//            keyboardOptions = KeyboardOptions.Default,
+//            keyboardActions = KeyboardActions.Default,
+//            visualTransformation = PasswordVisualTransformation()
+//        )
+//        Spacer(modifier = Modifier.height(15.dp))
+//
+//    }
+//    //Button
+//    Column(modifier = Modifier
+//        .padding(
+//            start = dimensionResource(R.dimen.padding_sign_up_button_start),
+//            end = dimensionResource(R.dimen.padding_sign_up_button_end)
+//        )){
+//        Button(
+//            onClick = {
+//                navController.navigate("HomeScreen")
+//            },
+//            shape = MaterialTheme.shapes.medium,
+//            modifier = Modifier.fillMaxWidth()
+//        ) {
+//            Text(
+//                text = stringResource(R.string.sign_in_screen_signIn_button),
+//                fontWeight = FontWeight.Normal,
+//                fontSize = 18.sp,
+//                textAlign = TextAlign.Center
+//            )
+//        }
+//        Spacer(modifier = Modifier.height(10.dp))
+//
+//    }
+//
+//}
+//
+//@Preview(showBackground = true)
+//@Composable
+//fun SignScreenPreview() {
+//    TUSParkingTheme {
+//        val navController = rememberNavController()
+//        SignMainContent(navController)
+//        SignScreen(navController)
+//
+//    }
+//}
+//
+//@Preview
+//@Composable
+//fun SignScreenDarkPreview() {
+//    TUSParkingTheme(darkTheme = true) {
+//        val navController = rememberNavController()
+//        SignScreen(navController)
+//
+//    }
+//}

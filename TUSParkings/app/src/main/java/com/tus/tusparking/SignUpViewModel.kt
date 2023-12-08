@@ -12,6 +12,7 @@ import com.tus.tusparking.Student
 class SignUpViewModel : ViewModel() {
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
+
     private val database: FirebaseDatabase =
         FirebaseDatabase.getInstance("https://tusParking-default-rtdb.europe-west1.firebasedatabase.app/")
 
