@@ -1,51 +1,73 @@
 package com.tus.tusparking
+
 import androidx.lifecycle.ViewModel
-import kotlinx.coroutines.flow.MutableStateFlow
-import kotlinx.coroutines.flow.StateFlow
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.getValue
-import androidx.compose.runtime.setValue
-import kotlinx.coroutines.flow.asStateFlow
-import androidx.lifecycle.viewModelScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
+import androidx.lifecycle.MutableLiveData
+import com.google.firebase.auth.FirebaseAuth
 
-class HomeScreenViewModel : ViewModel() {
 
-    private val _uiState = MutableStateFlow(HomeUiState())
-    val uiState: StateFlow<HomeUiState> = _uiState.asStateFlow()
+class HomeScreenViewModel:ViewModel() {
+    private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
-    var email by mutableStateOf("")
-        private set
-    var password by mutableStateOf("")
-        private set
+    val errorMessage = MutableLiveData<String>()
+    val userId = MutableLiveData<String?>()
 
-    fun onEmailChanged(email: String) {
-        this.email = email
-    }
-
-    fun onPasswordChanged(password: String) {
-        this.password = password
-    }
-
-    fun onSignInClicked() {
-
-        viewModelScope.launch {
-            kotlinx.coroutines.delay(1000)
-            _uiState.value = HomeUiState(isSignInSuccess = true)
+    //Registration Function
+    fun registerUser(email: String, password: String) {
+        // Check if the email or password field is empty
+        if (email.isEmpty() || password.isEmpty()) {
+            errorMessage.postValue("email or password cannot be empty")
+            return
         }
+        auth.createUserWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // User is registered
+                    val currentUser = auth.currentUser
+                    if (currentUser != null) {
+                        // Post the user ID to a LiveData
+                        userId.postValue(currentUser.uid)
+
+                    } else {
+                        // Handle the case where currentUser is null
+                        errorMessage.postValue("An error has occurred, Please Try again later")
+                    }
+                } else {
+                    // Handle failure
+                    errorMessage.postValue(task.exception?.message)
+                }
+            }
     }
 
-    fun onForgotPasswordClicked() {
-        viewModelScope.launch {
-            kotlinx.coroutines.delay(500)
-            _uiState.value = HomeUiState(navigateToForgotPassword = true)
+    //Login User Function
+    fun loginUser(email: String, password: String) {
+        // Check if the email or password field is empty
+        if (email.isEmpty() || password.isEmpty()) {
+            errorMessage.postValue("email or password cannot be empty")
+            return
         }
+
+        auth.signInWithEmailAndPassword(email, password)
+            .addOnCompleteListener { task ->
+                if (task.isSuccessful) {
+                    // User is logged in
+                    val currentUser = auth.currentUser
+                    if (currentUser != null) {
+                        // Post the user ID to a LiveData
+                        userId.postValue(currentUser.uid)
+                    } else {
+
+                        errorMessage.postValue("An error has occurred, Please Try again later")
+                    }
+                } else {
+                    // Handle failure
+                    errorMessage.postValue(task.exception?.message)
+                }
+            }
+    }
+
+    //Log out function
+    fun logoutUser() {
+        auth.signOut()
+        userId.postValue(null)
     }
 }
-
-data class HomeUiState(
-    val isSignInSuccess: Boolean = false,
-    val navigateToForgotPassword: Boolean = false
-)
-

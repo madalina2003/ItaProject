@@ -2,6 +2,7 @@ package com.tus.tusparking
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
@@ -16,6 +17,7 @@ import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
+import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -103,7 +105,8 @@ fun SearchScreen(navController: NavController) {
             shape = MaterialTheme.shapes.medium,
             modifier = Modifier
                 .fillMaxWidth()
-                .padding(horizontal = dimensionResource(R.dimen.text_field_horizontal_padding)),
+                .padding(horizontal = dimensionResource(R.dimen.text_field_horizontal_padding))
+                .background(Color.White),
             onValueChange = { searchQuery = it },
             label = { Text("Search", fontSize = 20.sp) },
             keyboardOptions = KeyboardOptions.Default,
@@ -113,6 +116,16 @@ fun SearchScreen(navController: NavController) {
                     painter = painterResource(R.drawable.icon),
                     contentDescription = null,
                     modifier = Modifier.size(18.dp)
+                )
+            },
+            trailingIcon = {
+                Icon(
+                    painter = painterResource(R.drawable.search),
+                    contentDescription = null,
+                    modifier = Modifier
+                        .clickable { navController.navigate("Maps") }
+                        .size(18.dp)
+
                 )
             }
 

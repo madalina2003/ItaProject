@@ -56,9 +56,15 @@ android {
 
 dependencies {
 //firebase
+    implementation("androidx.lifecycle:lifecycle-viewmodel-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-runtime-ktx:2.6.2")
+    implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0-rc01")
+    implementation("androidx.compose.runtime:runtime-livedata:1.6.0-beta02")
     implementation(platform("com.google.firebase:firebase-bom:32.6.0"))
     implementation("com.google.firebase:firebase-analytics")
     //map implementation
+
+    implementation("com.google.maps.android:maps-compose:4.3.0")
     implementation ("com.google.android.gms:play-services-maps:17.0.1")
     implementation("com.google.android.libraries.mapsplatform.secrets-gradle-plugin:secrets-gradle-plugin:1.3.0")
     //notification
@@ -80,6 +86,7 @@ dependencies {
     implementation("com.google.firebase:firebase-database-ktx:20.3.0")
     implementation("com.google.firebase:firebase-firestore-ktx:24.9.1")
     implementation("com.google.firebase:firebase-auth:22.3.0")
+    implementation("com.google.android.gms:play-services-location:21.0.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.5")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.5.1")
