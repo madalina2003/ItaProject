@@ -18,6 +18,7 @@
 
 
         <string name="sign_up_screen_register_button">Register</string>
+    <string name="logout_button_content_description">logout</string>
 
-<!--    <string name="map_id">6852d4407064ffc0</string>-->
+    <!--    <string name="map_id">6852d4407064ffc0</string>-->
     </resources>

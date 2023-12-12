@@ -18,6 +18,11 @@ import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
+import androidx.compose.material.icons.filled.DateRange
+import androidx.compose.material.icons.filled.ExitToApp
+import androidx.compose.material.icons.filled.Favorite
+import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.KeyboardArrowLeft
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
@@ -25,11 +30,13 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -45,6 +52,7 @@ import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.tus.tusparking.ui.theme.TUSParkingTheme
 
 
@@ -54,6 +62,7 @@ import com.tus.tusparking.ui.theme.TUSParkingTheme
 @Composable
 fun MapScreen(navController: NavController, userId: String?, viewModel: HomeScreenViewModel = viewModel()) {
     Text(text = "User ID: $userId")
+    val auth=FirebaseAuth.getInstance()
 
     Column(
         modifier = Modifier
@@ -127,9 +136,19 @@ fun MapScreen(navController: NavController, userId: String?, viewModel: HomeScre
             }
         }
 
+//        Button(
+//                    onClick = {
+//                        navController.navigate("HomeScreen")
+//                        auth.signOut()
+//                    }
+//                ) {
+//                    Text(text = "Logout")
+//                }
 
 
-        Column(
+
+
+            Column(
             modifier = Modifier
                 .fillMaxSize()
                 .padding(top = dimensionResource(R.dimen.padding_top_image))
@@ -157,7 +176,7 @@ fun MapScreen(navController: NavController, userId: String?, viewModel: HomeScre
                 Button(
                     onClick = {
 
-                        navController.navigate("Search")
+                        navController.navigate(Screen.Search.route)
                     },
                     modifier = Modifier
 
@@ -168,13 +187,19 @@ fun MapScreen(navController: NavController, userId: String?, viewModel: HomeScre
                         contentDescription = stringResource(R.string.search)
                     )
                 }
-                Button(
+                IconButton(
                     onClick = {
-                      //  logoutUser()
-                        navController.popBackStack()
-                    }
+                        navController.navigate("HomeScreen")
+                        auth.signOut()
+                    },
+                    modifier = Modifier
+                        .padding(end = 16.dp)
                 ) {
-                    Text(text = "Logout")
+                    Icon(
+                        imageVector = Icons.Default.ExitToApp,
+                        modifier = Modifier.size(25.dp),
+                        contentDescription = stringResource(R.string.logout_button_content_description)
+                    )
                 }
 
             }
@@ -205,13 +230,8 @@ fun MapScreen(navController: NavController, userId: String?, viewModel: HomeScre
         }
     }
 
+
         }
-
-
-
-
-
-
 
 
 

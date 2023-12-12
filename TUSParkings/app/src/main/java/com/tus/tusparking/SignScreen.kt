@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.layout.wrapContentSize
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
@@ -91,36 +92,29 @@ fun SignScreen(navController: NavController , viewModel: HomeScreenViewModel = v
 fun SignTopAppBar(navController: NavController){
     TopAppBar(
         title = {
-            Row(verticalAlignment = Alignment.CenterVertically,
-                    modifier = Modifier
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier
                     .background(Color.Black)
-                        .fillMaxHeight()
-                    .padding(horizontal = 70.dp, vertical = 24.dp))
-            {
+                    .fillMaxHeight()
+                    .padding(horizontal = 100.dp, vertical = 24.dp)
+            ) {
                 IconButton(onClick = { navController.popBackStack() }) {
-
-                    Icon(imageVector = Icons.Filled.KeyboardArrowLeft,modifier = Modifier.size(25.dp), contentDescription = stringResource(
-                        R.string.sign_up_screen_back_button)
+                    Icon(
+                        imageVector = Icons.Filled.KeyboardArrowLeft,
+                        modifier = Modifier.size(25.dp),
+                        contentDescription = stringResource(R.string.sign_up_screen_back_button)
                     )
                 }
-                Spacer(modifier = Modifier.width(25.dp))
-
-                Text(
-                    stringResource(R.string.home_screen_text),
-                    fontWeight = FontWeight.Bold,
-                    color = Color.White
-                )
-
-
+                Spacer(modifier = Modifier.width(40.dp))
                 Image(
                     painter = painterResource(R.drawable.tus),
-                    contentDescription = stringResource(R.string.home_screen_image_content),
+                    contentDescription = null,
                     contentScale = ContentScale.Fit,
                     modifier = Modifier
-                        .size(50.dp)
+                        .size(70.dp)
+                        .padding(5.dp)
                 )
-
-
             }
         },
         actions = {
@@ -136,13 +130,27 @@ fun SignTopAppBar(navController: NavController){
 @Composable
 fun SignTopText(){
 
+    Column {
+        Row {
+            Text(
+                text = stringResource(R.string.home_screen_text),
+                fontWeight = FontWeight.Bold,
+                fontSize = 30.sp,
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .padding(horizontal = 16.dp)
+                    .wrapContentSize(Alignment.Center)
+            )
+        }
+    }
+
     Spacer(modifier = Modifier.height(20.dp))
     Row(modifier = Modifier.fillMaxWidth()) {
         Text(text = stringResource(R.string.sign_in_screen_text),
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth(),
 
-            fontWeight=FontWeight.Bold,
+            fontWeight=FontWeight.Normal,
             fontSize = 20.sp,)
     }
 
@@ -259,35 +267,11 @@ fun SignMainContent(navController:NavController, viewModel: HomeScreenViewModel 
     ) {
         Text(
             text = " Login?",
+            color= Color.Blue,
             modifier = Modifier
                 .padding(150.dp,5.dp)
         )
     }
-
-    Spacer(modifier = Modifier.height(100.dp))
-
-    //logout footer
-//    Box(
-//        modifier = Modifier
-//            .fillMaxWidth()
-//            .padding(12.dp)
-//            .background(Color.Black)
-//    ) {
-//        Row(
-//            modifier = Modifier.fillMaxWidth(),
-//            horizontalArrangement = Arrangement.End
-//        ) {
-//            Button(
-//                onClick = {
-//                    // Add your logout logic here
-//                    // For example: viewModel.logout()
-//                    navController.popBackStack() // Replace this with your actual navigation logic
-//                }
-//            ) {
-//                Text(text = "Logout")
-//            }
-//        }
-//    }
 
 
 }
