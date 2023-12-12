@@ -44,6 +44,7 @@ import com.google.maps.android.compose.GoogleMap
 import com.google.maps.android.compose.Marker
 import com.google.maps.android.compose.MarkerState
 import com.google.maps.android.compose.rememberCameraPositionState
+import androidx.lifecycle.viewmodel.compose.viewModel
 import com.tus.tusparking.ui.theme.TUSParkingTheme
 
 
@@ -51,7 +52,7 @@ import com.tus.tusparking.ui.theme.TUSParkingTheme
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun MapScreen(navController: NavController, userId: String?) {
+fun MapScreen(navController: NavController, userId: String?, viewModel: HomeScreenViewModel = viewModel()) {
     Text(text = "User ID: $userId")
 
     Column(
@@ -127,6 +128,7 @@ fun MapScreen(navController: NavController, userId: String?) {
         }
 
 
+
         Column(
             modifier = Modifier
                 .fillMaxSize()
@@ -166,6 +168,14 @@ fun MapScreen(navController: NavController, userId: String?) {
                         contentDescription = stringResource(R.string.search)
                     )
                 }
+                Button(
+                    onClick = {
+                      //  logoutUser()
+                        navController.popBackStack()
+                    }
+                ) {
+                    Text(text = "Logout")
+                }
 
             }
 
@@ -194,6 +204,7 @@ fun MapScreen(navController: NavController, userId: String?) {
            }
         }
     }
+
         }
 
 

@@ -7,6 +7,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -41,6 +42,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.graphics.Color.Companion.Transparent
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
@@ -63,6 +65,7 @@ import com.tus.tusparking.ui.theme.TUSParkingTheme
 @Composable
 fun SignScreen(navController: NavController , viewModel: HomeScreenViewModel = viewModel()){
 
+
     Scaffold(
         topBar = {SignTopAppBar(navController)}
 
@@ -77,57 +80,10 @@ fun SignScreen(navController: NavController , viewModel: HomeScreenViewModel = v
                 SignMainContent(navController)
 
             }
-            Row(
-                modifier = Modifier
-                    .fillMaxWidth()
-                    .padding(8.dp),
-                horizontalArrangement = Arrangement.End
-            ) {
-                Button(
-                    onClick = {
-                        // Add your logout logic here
-                        // For example: viewModel.logout()
-                        navController.popBackStack() // Replace this with your actual navigation logic
-                    }
-                ) {
-                    Text(text = "Logout")
-                }
-            }
 
         }
     }
 
-    Column(
-        modifier = Modifier
-            .padding(dimensionResource(R.dimen.padding_home_columnA))
-            .fillMaxSize()
-            .verticalScroll(rememberScrollState()),
-        horizontalAlignment = Alignment.CenterHorizontally
-    ) {
-        // Black rectangle with image inside
-        Box(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(dimensionResource(R.dimen.rectangle_height))
-                .background(Color.Black)
-        ) {
-            // Image - TUS LOGO
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(top = dimensionResource(R.dimen.padding_top_image))
-            ) {
-                Image(
-                    painter = painterResource(R.drawable.tus),
-                    contentDescription = stringResource(R.string.home_screen_image_content),
-                    contentScale = ContentScale.Fit,
-                    modifier = Modifier
-                        .fillMaxSize()
-                )
-            }
-        }
-
-    }
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -135,7 +91,11 @@ fun SignScreen(navController: NavController , viewModel: HomeScreenViewModel = v
 fun SignTopAppBar(navController: NavController){
     TopAppBar(
         title = {
-            Row(verticalAlignment = Alignment.CenterVertically )
+            Row(verticalAlignment = Alignment.CenterVertically,
+                    modifier = Modifier
+                    .background(Color.Black)
+                        .fillMaxHeight()
+                    .padding(horizontal = 70.dp, vertical = 24.dp))
             {
                 IconButton(onClick = { navController.popBackStack() }) {
 
@@ -143,11 +103,22 @@ fun SignTopAppBar(navController: NavController){
                         R.string.sign_up_screen_back_button)
                     )
                 }
-                Spacer(modifier = Modifier.width(16.dp))
+                Spacer(modifier = Modifier.width(25.dp))
 
                 Text(
-                    stringResource(R.string.home_screen_text) ,
-                    fontWeight = FontWeight.Bold )
+                    stringResource(R.string.home_screen_text),
+                    fontWeight = FontWeight.Bold,
+                    color = Color.White
+                )
+
+
+                Image(
+                    painter = painterResource(R.drawable.tus),
+                    contentDescription = stringResource(R.string.home_screen_image_content),
+                    contentScale = ContentScale.Fit,
+                    modifier = Modifier
+                        .size(50.dp)
+                )
 
 
             }
@@ -155,8 +126,8 @@ fun SignTopAppBar(navController: NavController){
         actions = {
         }
 
-
     )
+
 
 
 
@@ -164,13 +135,15 @@ fun SignTopAppBar(navController: NavController){
 
 @Composable
 fun SignTopText(){
+
+    Spacer(modifier = Modifier.height(20.dp))
     Row(modifier = Modifier.fillMaxWidth()) {
         Text(text = stringResource(R.string.sign_in_screen_text),
             textAlign = TextAlign.Center,
             modifier = Modifier.fillMaxWidth(),
 
-            fontWeight=FontWeight.Normal,
-            fontSize = 18.sp,)
+            fontWeight=FontWeight.Bold,
+            fontSize = 20.sp,)
     }
 
 }
@@ -185,7 +158,7 @@ fun SignMainContent(navController:NavController, viewModel: HomeScreenViewModel 
     val userId = viewModel.userId.observeAsState()
 
 
-
+    Spacer(modifier = Modifier.height(20.dp))
     Column(modifier = Modifier
         .padding(
             start= dimensionResource(R.dimen.padding_input_fields_start),
@@ -193,7 +166,7 @@ fun SignMainContent(navController:NavController, viewModel: HomeScreenViewModel 
             top = dimensionResource(R.dimen.padding_input_fields_top),
             bottom = dimensionResource(R.dimen.padding_input_fields_bottom)
         )){
-        Spacer(modifier = Modifier.height(15.dp))
+        Spacer(modifier = Modifier.height(20.dp))
         if (errorMessage != null) {
             AlertDialog(
                 onDismissRequest = { viewModel.errorMessage.value = null },
@@ -207,6 +180,7 @@ fun SignMainContent(navController:NavController, viewModel: HomeScreenViewModel 
             )
         }
 
+        Spacer(modifier = Modifier.height(20.dp))
         OutlinedTextField(
             value = email,
             singleLine = true,
@@ -217,16 +191,17 @@ fun SignMainContent(navController:NavController, viewModel: HomeScreenViewModel 
                 focusedBorderColor = MaterialTheme.colorScheme.surface,
                 unfocusedBorderColor = MaterialTheme.colorScheme.surface,
                 disabledBorderColor = MaterialTheme.colorScheme.surface,
+                cursorColor = Color.Gray,
             ),
             label = { Text(
                 stringResource(R.string.sign_up_screen_email),
                 fontWeight=FontWeight.Normal,
-                fontSize = 18.sp,) },
+                fontSize = 20.sp,) },
             isError = false,
             keyboardOptions = KeyboardOptions.Default,
             keyboardActions = KeyboardActions.Default,
         )
-        Spacer(modifier = Modifier.height(15.dp))
+        Spacer(modifier = Modifier.height(20.dp))
 
         OutlinedTextField(
             value = password,
@@ -238,8 +213,10 @@ fun SignMainContent(navController:NavController, viewModel: HomeScreenViewModel 
                 focusedBorderColor = MaterialTheme.colorScheme.surface,
                 unfocusedBorderColor = MaterialTheme.colorScheme.surface,
                 disabledBorderColor = MaterialTheme.colorScheme.surface,
+                cursorColor = Color.Gray,
+                //focusedIndicatorColor = Color.Gray
             ),
-            label = { Text(stringResource(R.string.sign_up_screen_password)) },
+            label = { Text(stringResource(R.string.sign_up_screen_password) ,fontSize = 20.sp,) },
             isError = false,
             keyboardOptions = KeyboardOptions.Default,
             keyboardActions = KeyboardActions.Default,
@@ -253,15 +230,14 @@ fun SignMainContent(navController:NavController, viewModel: HomeScreenViewModel 
         .padding(
             start = dimensionResource(R.dimen.padding_sign_up_button_start),
             end = dimensionResource(R.dimen.padding_sign_up_button_end)
-        )) {
+        )){
         Button(
             onClick = {
                 viewModel.registerUser(email.lowercase(), password)
                 if (userId.value != null) {
                     navController.navigate("maps/${userId.value}")
 
-                }
-            },
+                }},
             shape = MaterialTheme.shapes.medium,
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -274,22 +250,44 @@ fun SignMainContent(navController:NavController, viewModel: HomeScreenViewModel 
         }
         Spacer(modifier = Modifier.height(10.dp))
 
-
-        Button(
-            onClick = { navController.navigate(Screen.HomeScreen.route) },
-            modifier = Modifier.padding(10.dp),
-            colors = ButtonDefaults.buttonColors(
-                containerColor = Color.Transparent,
-                contentColor = Color.Black
-            ),
-        ) {
-            Text(
-                text = "Login?",
-                modifier = Modifier
-                    .padding(100.dp, 5.dp, 0.dp, 0.dp)
-            )
-        }
     }
+
+    Button(
+        onClick = { navController.navigate(Screen.HomeScreen.route) },
+        modifier = Modifier.padding(10.dp),
+        colors = ButtonDefaults.buttonColors(containerColor = Transparent, contentColor = Color.Black),
+    ) {
+        Text(
+            text = " Login?",
+            modifier = Modifier
+                .padding(150.dp,5.dp)
+        )
+    }
+
+    Spacer(modifier = Modifier.height(100.dp))
+
+    //logout footer
+//    Box(
+//        modifier = Modifier
+//            .fillMaxWidth()
+//            .padding(12.dp)
+//            .background(Color.Black)
+//    ) {
+//        Row(
+//            modifier = Modifier.fillMaxWidth(),
+//            horizontalArrangement = Arrangement.End
+//        ) {
+//            Button(
+//                onClick = {
+//                    // Add your logout logic here
+//                    // For example: viewModel.logout()
+//                    navController.popBackStack() // Replace this with your actual navigation logic
+//                }
+//            ) {
+//                Text(text = "Logout")
+//            }
+//        }
+//    }
 
 
 }

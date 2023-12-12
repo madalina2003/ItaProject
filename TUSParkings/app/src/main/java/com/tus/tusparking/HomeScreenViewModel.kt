@@ -11,7 +11,6 @@ class HomeScreenViewModel:ViewModel() {
     val errorMessage = MutableLiveData<String>()
     val userId = MutableLiveData<String?>()
 
-    //Registration Function
     fun registerUser(email: String, password: String) {
         // Check if the email or password field is empty
         if (email.isEmpty() || password.isEmpty()) {
