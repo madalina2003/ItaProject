@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import androidx.lifecycle.viewmodel.compose.viewModel
+import com.google.firebase.auth.FirebaseAuth
 import com.tus.tusparking.ui.theme.TUSParkingTheme
 
 
@@ -66,10 +67,29 @@ fun PaymentScreen(navController: NavController,viewModel: PaymentViewModel = vie
 
         Spacer(modifier = Modifier.height(32.dp))
 
+//        Button(
+//            onClick = {
+//               // viewModel.processPayment(cardNumber, expiryDate, cvv)
+//                      navController.navigate(Screen.PaymentSuccessScreen.route)
+//            },
+//            modifier = Modifier.fillMaxWidth()
+//        ) {
+//            Text("Process Payment")
+//        }
         Button(
             onClick = {
-               // viewModel.processPayment(cardNumber, expiryDate, cvv)
-                      navController.navigate(Screen.PaymentSuccessScreen.route)
+                val userId = FirebaseAuth.getInstance().currentUser?.uid
+                val cardNumber = cardNumber
+                val expiryDate = expiryDate
+                val cvv = cvv
+
+                if (userId != null) {
+                    // Call the public function to save payment details to Firestore
+                    viewModel.processPayment(userId,cardNumber, expiryDate, cvv)
+                    navController.navigate(Screen.PaymentSuccessScreen.route)
+                } else {
+                    println("User not authenticated")
+                }
             },
             modifier = Modifier.fillMaxWidth()
         ) {
@@ -77,7 +97,6 @@ fun PaymentScreen(navController: NavController,viewModel: PaymentViewModel = vie
         }
     }
 }
-
 @Composable
 fun CardDetailsTextField(label: String, value: String, onValueChange: (String) -> Unit) {
     OutlinedTextField(

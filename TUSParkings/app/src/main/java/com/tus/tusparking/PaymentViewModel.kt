@@ -12,22 +12,20 @@ class PaymentViewModel : ViewModel() {
     val errorMessage = MutableLiveData<String>()
     val paymentStatus = MutableLiveData<Boolean>()
 
-    fun processPayment(cardNumber: String, expiryDate: String, cvv: String) {
+    fun processPayment(userId: String,cardNumber: String, expiryDate: String, cvv: String) {
 
         println("Card Number: $cardNumber, Expiry Date: $expiryDate, CVV: $cvv")
 
         // Save payment details to Firestore
-        savePaymentToFirestore(cardNumber, expiryDate, cvv)
+        savePaymentToFirestore(userId,cardNumber, expiryDate, cvv)
     }
 
-    private fun savePaymentToFirestore(cardNumber: String, expiryDate: String, cvv: String) {
-        val userId = auth.currentUser?.uid
-        if (userId != null) {
-            val paymentData = hashMapOf(
-                "cardNumber" to cardNumber,
-                "expiryDate" to expiryDate,
-                "cvv" to cvv
-            )
+   fun savePaymentToFirestore(userId: String, cardNumber: String, expiryDate: String, cvv: String) {
+        val paymentData = hashMapOf(
+            "cardNumber" to cardNumber,
+            "expiryDate" to expiryDate,
+            "cvv" to cvv
+        )
 
 
             val paymentsCollection = db.collection("users").document(userId).collection("payments")
@@ -43,16 +41,7 @@ class PaymentViewModel : ViewModel() {
                     errorMessage.postValue(e.message)
                     paymentStatus.postValue(false) // Payment failed
                 }
-        } else {
-            errorMessage.postValue("User not authenticated")
-            paymentStatus.postValue(false) // Payment failed
         }
     }
 
 
-
-    override fun onCleared() {
-
-        super.onCleared()
-    }
-}

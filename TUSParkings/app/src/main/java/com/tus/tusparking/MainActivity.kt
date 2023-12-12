@@ -121,38 +121,38 @@ fun TUSParkingApp(startDestination:String=Screen.SignUpScreen.route) {
 //                }
 //            }
 
-            val context = LocalContext.current
+          //  val context = LocalContext.current
 
-            val postNotificationPermission=
-                rememberPermissionState(permission = Manifest.permission.POST_NOTIFICATIONS)
-            val notificationService=NotificationService(context)
-            LaunchedEffect(postNotificationPermission ){
-                if(!postNotificationPermission.status.isGranted){
-                    postNotificationPermission.launchPermissionRequest()
-                }
-            }
-            Column {
-                Button(
-                    modifier = Modifier
-                        .size(100.dp, 40.dp),
-                    onClick = {
-                        notificationService.showBasicNotification()
-                    }
-                ) {
-                    Text(text = "Show basic notifications")
-                }
-                Spacer(modifier = Modifier.height(10.dp))
-
-                Button(
-                    modifier = Modifier
-                        .size(120.dp, 40.dp),
-                    onClick = {
-                        notificationService.showExpandableNotification()
-                    }
-                ) {
-                    Text(text = "Show Expandable notifications")
-                }
-            }
+//            val postNotificationPermission=
+//                rememberPermissionState(permission = Manifest.permission.POST_NOTIFICATIONS)
+//            val notificationService=NotificationService(context)
+//            LaunchedEffect(postNotificationPermission ){
+//                if(!postNotificationPermission.status.isGranted){
+//                    postNotificationPermission.launchPermissionRequest()
+//                }
+//            }
+//            Column {
+//                Button(
+//                    modifier = Modifier
+//                        .size(100.dp, 40.dp),
+//                    onClick = {
+//                        notificationService.showBasicNotification()
+//                    }
+//                ) {
+//                    Text(text = "Show basic notifications")
+//                }
+//                Spacer(modifier = Modifier.height(10.dp))
+//
+//                Button(
+//                    modifier = Modifier
+//                        .size(120.dp, 40.dp),
+//                    onClick = {
+//                        notificationService.showExpandableNotification()
+//                    }
+//                ) {
+//                    Text(text = "Show Expandable notifications")
+//                }
+//            }
 
 
             }
