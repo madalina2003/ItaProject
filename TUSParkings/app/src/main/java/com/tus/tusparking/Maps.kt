@@ -2,6 +2,7 @@ package com.tus.tusparking
 
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -41,8 +42,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.dimensionResource
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
 import androidx.navigation.compose.rememberNavController
 import com.google.android.gms.maps.model.CameraPosition
@@ -187,6 +192,7 @@ fun MapScreen(navController: NavController, userId: String?, viewModel: HomeScre
                         contentDescription = stringResource(R.string.search)
                     )
                 }
+                //logout icon
                 IconButton(
                     onClick = {
                         navController.navigate("HomeScreen")
@@ -230,6 +236,27 @@ fun MapScreen(navController: NavController, userId: String?, viewModel: HomeScre
         }
     }
 
+    Text(
+
+        buildAnnotatedString {
+            withStyle(
+                style = SpanStyle(
+                    color = Color.Blue,
+                    fontSize = 16.sp
+                ), {
+                    append("Payment")
+                }
+            )
+        },
+        modifier = Modifier
+            .padding(top = 600.dp)
+            .fillMaxWidth()
+            .clickable {
+                navController.navigate(Screen.PaymentScreen.route)
+            }
+            .padding(160.dp, 20.dp, 0.dp, 0.dp)
+
+    )
 
         }
 

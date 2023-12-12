@@ -93,12 +93,21 @@ fun TUSParkingApp(startDestination:String=Screen.SignUpScreen.route) {
                     composable(Screen.HomeScreen.route) {
                         HomeScreen(navController)
                     }
-//                    composable("Maps") {
-//                        MapScreen(navController)
-//                    }
+
                 composable(Screen.Search.route) {
                     SearchScreen(navController)
                 }
+                composable(Screen.PaymentScreen.route) {
+                    PaymentScreen(navController)
+                }
+                composable(Screen.PaymentSuccessScreen.route) {
+                    PaymentSuccessScreen(navController)
+                }
+                composable(Screen.Maps.route) {backStackEntry ->
+                    val userId = backStackEntry.arguments?.getString("userId")
+                    MapScreen(navController, userId )
+                }
+
 
                 composable("maps/{userId}") { backStackEntry ->
                     val userId = backStackEntry.arguments?.getString("userId")
