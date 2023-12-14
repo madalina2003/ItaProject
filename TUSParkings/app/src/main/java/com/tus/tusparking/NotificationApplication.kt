@@ -7,6 +7,7 @@ import android.os.Build
 import androidx.annotation.RequiresApi
 
 class NotificationApplication : Application() {
+
     @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate() {
         super.onCreate()

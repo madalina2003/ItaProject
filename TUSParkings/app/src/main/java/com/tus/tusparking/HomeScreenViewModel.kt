@@ -6,6 +6,8 @@ import com.google.firebase.auth.FirebaseAuth
 
 
 class HomeScreenViewModel:ViewModel() {
+
+    //reference  : https://firebase.google.com/docs/auth/android/start
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
 
     val errorMessage = MutableLiveData<String>()

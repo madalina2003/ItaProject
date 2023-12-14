@@ -9,6 +9,7 @@ import kotlin.random.Random
 
 class NotificationService (
     private val context: Context
+   // reference: https://medium.com/@kathankraithatha/notifications-with-jetpack-compose-3302f27e1348
     ){
         private val notificationManager=context.getSystemService(NotificationManager::class.java)
         fun showBasicNotification(){

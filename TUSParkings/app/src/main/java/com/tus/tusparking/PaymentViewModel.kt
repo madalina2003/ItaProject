@@ -6,6 +6,8 @@ import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.FirebaseFirestore
 
 class PaymentViewModel : ViewModel() {
+
+    //reference : https://medium.com/@deepak140596/firebase-firestore-using-view-models-and-livedata-f9a012233917
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     private val db: FirebaseFirestore = FirebaseFirestore.getInstance()
 
