@@ -76,7 +76,7 @@ class MainActivity : ComponentActivity() {
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
-fun TUSParkingApp(startDestination:String=Screen.SignUpScreen.route) {
+fun TUSParkingApp(startDestination:String=Screen.HomeScreen.route) {
     val navController = rememberNavController()
     val viewModel: HomeScreenViewModel = viewModel()
     TUSParkingTheme {

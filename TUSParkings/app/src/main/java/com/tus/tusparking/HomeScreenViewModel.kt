@@ -1,8 +1,14 @@
 package com.tus.tusparking
 
+import android.content.ContentValues.TAG
+import android.util.Log
+import androidx.lifecycle.LiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.MutableLiveData
+import com.google.android.gms.maps.model.LatLng
+import com.google.firebase.Firebase
 import com.google.firebase.auth.FirebaseAuth
+import com.google.firebase.firestore.firestore
 
 
 class HomeScreenViewModel:ViewModel() {
@@ -65,6 +71,67 @@ class HomeScreenViewModel:ViewModel() {
                 }
             }
     }
+
+
+    private val _markers = MutableLiveData<List<LatLng>>()
+    val markers: LiveData<List<LatLng>> = _markers
+
+    fun fetchMarkers() {
+        val db = Firebase.firestore
+        val collectionRef = db.collection("marker")
+
+        collectionRef.get().addOnSuccessListener { result ->
+            val markerList = mutableListOf<LatLng>()
+
+            for (document in result) {
+                val location = document.getGeoPoint("location")
+                if (location != null) {
+                    markerList.add(LatLng(location.latitude, location.longitude))
+                }
+            }
+
+            _markers.value = markerList
+            Log.d(TAG, "Markers fetched: $markerList")
+        }.addOnFailureListener { exception ->
+            Log.e(TAG, "Fetch markers failed", exception)
+        }
+    }
+
+
+                //attempt of changing marker colour based on status
+
+//    data class MarkerData(val position: LatLng, val status: Boolean)
+//
+//    private val _markers = MutableLiveData<List<MarkerData>>()
+//    val markers: LiveData<List<MarkerData>> = _markers
+//
+//    fun fetchMarkers() {
+//        val db = Firebase.firestore
+//        val collectionRef = db.collection("marker")
+//
+//        collectionRef.get().addOnSuccessListener { result ->
+//            val markerList = mutableListOf<MarkerData>()
+//
+//            for (document in result) {
+//                val location = document.getGeoPoint("location")
+//                val status = document.getBoolean("status") ?: false
+//
+//                if (location != null) {
+//                    markerList.add(MarkerData(LatLng(location.latitude, location.longitude), status))
+//                }
+//            }
+//
+//            _markers.value = markerList
+//            Log.d(TAG, "Markers fetched: $markerList")
+//        }.addOnFailureListener { exception ->
+//            Log.e(TAG, "Fetch markers failed", exception)
+//        }
+//    }
+
+
+
+
+
 
     //Log out function
     fun logoutUser() {

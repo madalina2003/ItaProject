@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
@@ -34,6 +35,8 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -46,6 +49,7 @@ import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
 import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.IntOffset
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.navigation.NavController
@@ -212,6 +216,7 @@ fun MapScreen(navController: NavController, userId: String?, viewModel: HomeScre
 
         }
         //Google map
+
         Box(
             modifier = Modifier
                 .width(1000.dp)
@@ -221,19 +226,95 @@ fun MapScreen(navController: NavController, userId: String?, viewModel: HomeScre
         ) {
             val tus = LatLng(52.67566, -8.64752)
             val cameraPositionState = rememberCameraPositionState {
-                position = CameraPosition.fromLatLngZoom(tus, 16f)
+                position = CameraPosition.fromLatLngZoom(tus, 14f)
             }
+
+            // Observe the list of markers from the ViewModel
+            val markersState = viewModel.markers.observeAsState()
+
             GoogleMap(
                 modifier = Modifier.fillMaxSize(),
                 cameraPositionState = cameraPositionState
             ) {
+
+                LaunchedEffect(Unit) {
+                    viewModel.fetchMarkers()
+                }
+
+
                 Marker(
                     state = MarkerState(position = tus),
                     title = "TUS",
                     snippet = "Marker in TUS"
                 )
-           }
+
+                val markers = markersState.value
+
+                markers?.forEach { latLng ->
+                    Marker(
+                        state = MarkerState(position = latLng),
+                        title = "Parking",
+                        snippet = "Availability"
+                    )
+                }
+            }
         }
+
+
+            //attempt of changing the marker colour
+//        Box(
+//            modifier = Modifier
+//                .width(1000.dp)
+//                .height(1500.dp)
+//                .padding(vertical = 250.dp)
+//                .wrapContentSize(align = Alignment.Center)
+//        ) {
+//            val tus = LatLng(52.67566, -8.64752)
+//            val cameraPositionState = rememberCameraPositionState {
+//                position = CameraPosition.fromLatLngZoom(tus, 14f)
+//            }
+//
+//            // Observe the list of markers from the ViewModel
+//            val markersState = viewModel.markers.observeAsState()
+//
+//            GoogleMap(
+//                modifier = Modifier.fillMaxSize(),
+//                cameraPositionState = cameraPositionState
+//            ) {
+//
+//                LaunchedEffect(Unit) {
+//                    viewModel.fetchMarkers()
+//                }
+//
+//                // Add the default marker
+//                Marker(
+//                    state = MarkerState(position = tus),
+//                    title = "TUS",
+//                    snippet = "Marker in TUS"
+//                )
+//
+//                val markers = markersState.value
+//
+//                markers?.forEach { marker ->
+//                    val markerIcon = if (marker.status) {
+//                        painterResource(R.drawable.g)
+//                    } else {
+//                        painterResource(R.drawable.p)
+//                    }
+//
+//                    Image(
+//                        painter = markerIcon,
+//                        contentDescription = "Marker",
+//                        modifier = Modifier
+//                            .offset { IntOffset(marker.position.longitude.toInt(), marker.position.latitude.toInt()) }
+//                    )
+//                }
+//            }
+//        }
+
+
+
+
     }
 
     Text(
@@ -259,6 +340,9 @@ fun MapScreen(navController: NavController, userId: String?, viewModel: HomeScre
     )
 
         }
+
+
+
 
 
 
